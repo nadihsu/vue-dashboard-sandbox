@@ -1,0 +1,7 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`About Page > 基本 1`] = `
+"<div>
+  <p>This is about page</p>
+</div>"
+`;
