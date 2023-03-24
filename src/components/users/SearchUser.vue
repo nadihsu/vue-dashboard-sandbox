@@ -1,64 +1,73 @@
 <template>
   <div class="search-wrap">
-    <form>
-      <div class="form-field">
-        <label for="username"> 使用者 </label>
-        <input
-          id="username"
-          v-model="data.username"
-          type="text"
-          name="username"
-        >
-      </div>
+    <el-form
+      label-position="top"
+      label-width="100px"
+    >
+      <el-form-item label="使用者">
+        <el-input v-model="data.username" />
+      </el-form-item>
 
-      <div class="form-field">
-        <label for="enable">啟用</label>
-        <select
-          id="enable"
+      <el-form-item label="啟用">
+        <el-select
           v-model="data.enable"
         >
-          <option value="-1">
-            不限
-          </option>
-          <option value="1">
-            啟用
-          </option>
-          <option value="0">
-            停用
-          </option>
-        </select>
-      </div>
+          <el-option
+            v-for="item in enableOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
 
-      <div class="form-field">
-        <label for="locked">鎖定</label>
-        <select
-          id="locked"
+      <el-form-item label="鎖定">
+        <el-select
           v-model="data.locked"
         >
-          <option value="-1">
-            不限
-          </option>
-          <option value="1">
-            鎖定
-          </option>
-          <option value="0">
-            未鎖定
-          </option>
-        </select>
-      </div>
+          <el-option
+            v-for="item in lockedOptions"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
 
-      <div class="form-field">
-        <button @click="searchUsers">
+      <el-form-item label="建立日期">
+        <!-- <el-date-picker
+          v-model="data.created_at"
+          format="YYYY/MM/DD"
+          value-format="YYYY-MM-DD"
+          type="date"
+          placeholder="請選擇"
+          size="default"
+        /> -->
+        <el-date-picker
+          v-model="data.created_at"
+          type="daterange"
+          start-placeholder="起"
+          end-placeholder="迄"
+          format="YYYY/MM/DD"
+          value-format="YYYY-MM-DD"
+        />
+      </el-form-item>
+
+      <el-form-item>
+        <el-button
+          type="primary"
+          @click="searchUsers"
+        >
           搜尋
-        </button>
-      </div>
+        </el-button>
+      </el-form-item>
 
-      <div class="form-field">
-        <button @click="resetSearch">
-          恢復
-        </button>
-      </div>
-    </form>
+      <el-form-item>
+        <el-button @click="resetSearch">
+          清除
+        </el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -67,7 +76,38 @@ const initData = {
   username: '',
   enable: -1,
   locked: -1,
+  created_at: [],
 };
+
+const enableOptions = [
+  {
+    label: '不限',
+    value: -1,
+  },
+  {
+    label: '啟用',
+    value: 1,
+  },
+  {
+    label: '停用',
+    value: 0,
+  },
+];
+
+const lockedOptions = [
+  {
+    label: '不限',
+    value: -1,
+  },
+  {
+    label: '已鎖定',
+    value: 1,
+  },
+  {
+    label: '未鎖定',
+    value: 0,
+  },
+];
 
 export default {
   props: {
@@ -78,7 +118,9 @@ export default {
   },
   data() {
     return {
-      data: initData,
+      data: { ...initData },
+      enableOptions,
+      lockedOptions,
     };
   },
   methods: {
@@ -86,7 +128,18 @@ export default {
      * 查詢使用者
      */
     async searchUsers() {
-      this.getUsers({ isSearching: true, data: this.data });
+      const [startCreatedAt, endCreatedAt] = this.data.created_at;
+      const payload = {
+        ...this.data,
+        ...((startCreatedAt && endCreatedAt) && {
+          start_created_at: startCreatedAt,
+          end_created_at: endCreatedAt,
+        }),
+      };
+
+      delete payload.created_at;
+
+      this.getUsers({ isSearching: true, data: payload });
     },
     /**
      * 恢復查詢條件
@@ -100,7 +153,7 @@ export default {
 
 <style lang="scss" scope>
 .search-wrap {
-  border: 1px solid #333;
+  border: 1px solid var(--el-border-color);
   padding: 1rem;
   margin: 1rem 0;
 
@@ -109,13 +162,8 @@ export default {
     align-items: flex-end;
   }
 
-  .form-field {
+  .el-form-item {
     margin-right: 1rem;
-
-    label {
-      display: block;
-      margin-bottom: 0.3rem;
-    }
   }
 }
 </style>

@@ -1,76 +1,46 @@
 <template>
-  <div class="modal">
-    <div class="modal-title">
-      {{ user.id ? `編輯使用者: ${user.username}` : '新增使用者' }}
-    </div>
-    <div class="modal-content">
-      <form>
-        <div class="form-field">
-          <label for="username"> 使用者 </label>
-          <input
-            id="username"
-            v-model="data.username"
-            type="text"
-            name="username"
-          >
-        </div>
-        <div class="form-field">
+  <el-form
+    :model="form"
+    label-width="80"
+  >
+    <el-form-item label="使用者">
+      <el-input v-model="form.username" />
+    </el-form-item>
+
+    <el-form-item label="啟用">
+      <el-radio-group v-model="form.enable">
+        <el-radio :label="Number(1)">
           啟用
-          <label for="enable">
-            <input
-              id="1"
-              v-model="data.enable"
-              type="radio"
-              name="enable"
-              value="1"
-            >
-            啟用
-          </label>
-          <label for="disabled">
-            <input
-              id="0"
-              v-model="data.enable"
-              type="radio"
-              name="enable"
-              value="0"
-            >
-            停用
-          </label>
-        </div>
-        <div class="form-field">
+        </el-radio>
+        <el-radio :label="Number(0)">
+          停用
+        </el-radio>
+      </el-radio-group>
+    </el-form-item>
+
+    <el-form-item label="鎖定">
+      <el-radio-group v-model="form.locked">
+        <el-radio :label="Number(1)">
           鎖定
-          <label for="locked">
-            <input
-              id="locked"
-              v-model="data.locked"
-              type="radio"
-              name="locked"
-              value="1"
-            >
-            已鎖定
-          </label>
-          <label for="unlocked">
-            <input
-              id="unlocked"
-              v-model="data.locked"
-              type="radio"
-              name="locked"
-              value="0"
-            >
-            未鎖定
-          </label>
-        </div>
-      </form>
-    </div>
-    <div class="modal-actions">
-      <button @click="clearUser">
+        </el-radio>
+        <el-radio :label="Number(0)">
+          解鎖
+        </el-radio>
+      </el-radio-group>
+    </el-form-item>
+
+    <el-form-item>
+      <el-button @click="clearUser">
         清空
-      </button>
-      <button @click="submitUser">
-        建立
-      </button>
-    </div>
-  </div>
+      </el-button>
+      <el-button
+        type="primary"
+        @click="submitUser"
+      >
+        {{ user.id ? '編輯' : '新增' }}
+      </el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script>
@@ -99,72 +69,50 @@ export default {
     },
   },
   data() {
+    const { username, enable, locked } = this.user;
     return {
-      data: this.user,
+      form: {
+        username: username ?? '',
+        enable: enable ?? null,
+        locked: locked ?? null,
+      },
     };
-  },
-  watch: {
-    user(newValue) {
-      this.data = newValue;
-    },
   },
   methods: {
     /**
      * 清空資料
      */
     clearUser() {
-      this.data = {};
+      this.form = {};
     },
-
     /**
      * 送出使用者資料
      */
     async submitUser() {
-      if (!Object.keys(this.data).length) {
+      const { id } = this.user;
+      const { username, enable, locked } = this.form;
+
+      if (!Object.keys(this.form).length) {
         return;
       }
 
       // 編輯
-      if (this.data.id) {
-        this.editUser?.(this.data.id, {
-          username: this.data.username,
-          enable: this.data.enable,
-          locked: this.data.locked,
+      if (id) {
+        this.editUser(id, {
+          username,
+          enable,
+          locked,
         });
       }
 
       // 新增
-      if (!this.data.id) {
-        this.createUser?.(this.data);
+      if (!id) {
+        this.createUser(this.form);
       }
 
       this.closeModal();
+      this.clearUser();
     },
   },
 };
 </script>
-
-<style lang="scss">
-.modal {
-  > div {
-    padding: 1rem;
-  }
-
-  &-title {
-    border-bottom: 1px solid #333;
-  }
-
-  &-actions {
-    border-top: 1px solid #333;
-  }
-
-  .form-field {
-    display: block;
-    margin-bottom: 1rem;
-
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-}
-</style>

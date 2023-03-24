@@ -23,7 +23,7 @@ for (let i = 0; i < 50; i++) {
     username: `user${userId}`,
     enable: (Math.random() * 10) & 1,
     locked: (Math.random() * 10) & 1,
-    created_at: `2019-01-${convert(Number.parseInt(Math.random() * 25 + 1))}T${withLeadingZeros(Number.parseInt(Math.random() * 20))}:00:00+08:00`,
+    created_at: `2023-02-${convert(Number.parseInt(Math.random() * 25 + 1))}T${withLeadingZeros(Number.parseInt(Math.random() * 20))}:00:00+08:00`,
   });
 
   userId++;

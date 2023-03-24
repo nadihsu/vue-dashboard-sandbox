@@ -1,41 +1,82 @@
 <template>
-  <div class="table-wrapper">
-    <table>
-      <thead>
-        <tr>
-          <th>序</th>
-          <th>使用者</th>
-          <th>啟用時間</th>
-          <th>啟用</th>
-          <th>鎖定</th>
-          <th>操作</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          v-for="d in data"
-          :key="d.id"
-        >
-          <td>{{ d.id }}</td>
-          <td>{{ d.username }}</td>
-          <td>{{ day(d.created_at).format('YYYY-MM-DD') }}</td>
-          <td>{{ d.enable ? '啟用' : '停用' }}</td>
-          <td>{{ d.locked ? '鎖定' : '未鎖定' }}</td>
-          <td>
-            <button @click="openEditUserDialog(user)">
-              編輯
-            </button>
-            <button @click="openDeleteUserDialog(user)">
-              刪除
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <div>
+    <el-table
+      :data="data"
+      stripe
+      border
+    >
+      <el-table-column
+        prop="id"
+        label="序"
+      />
+
+      <el-table-column
+        prop="username"
+        label="使用者"
+      />
+
+      <el-table-column
+        prop="created_at"
+        label="建立時間"
+        :formatter="formatterDate"
+      />
+
+      <el-table-column
+        prop="enable"
+        label="啟用"
+        align="center"
+      >
+        <template #default="scope">
+          <el-tag :type="scope.row.enable ? 'success' : 'danger'">
+            {{ scope.row.enable ? '啟用' : '停用' }}
+          </el-tag>
+        </template>
+      </el-table-column>
+
+      <el-table-column
+        prop="locked"
+        label="鎖定"
+        align="center"
+      >
+        <template #default="scope">
+          <el-icon :size="20">
+            <Lock
+              v-if="scope.row.locked"
+              color="#999"
+            />
+            <Unlock v-else />
+          </el-icon>
+        </template>
+      </el-table-column>
+
+      <el-table-column
+        label="操作"
+        align="center"
+      >
+        <template #default="scope">
+          <el-button
+            size="small"
+            @click="openEditUserDialog(scope.row)"
+          >
+            編輯
+          </el-button>
+          <el-button
+            type="danger"
+            size="small"
+            @click="openDeleteUserDialog(scope.row)"
+          >
+            刪除
+          </el-button>
+        </template>
+      </el-table-column>
+    </el-table>
   </div>
-  <Modal
-    v-if="showEditModal"
-    @close="showEditModal = false"
+
+  <el-dialog
+    v-model="showEditModal"
+    :title="`編輯使用者: ${user.username}`"
+    width="25%"
+    destroy-on-close
   >
     <EditUserModal
       :active="showEditModal"
@@ -43,10 +84,14 @@
       :close-modal="onClose"
       :edit-user="editUser"
     />
-  </Modal>
-  <Modal
-    v-if="showDeleteModal"
-    @close="showDeleteModal = false"
+  </el-dialog>
+
+  <el-dialog
+    v-model="showDeleteModal"
+    :title="`刪除使用者: ${user.username}`"
+    width="25%"
+    center
+    destroy-on-close
   >
     <DeleteUserModal
       :active="showDeleteModal"
@@ -54,17 +99,15 @@
       :close-modal="onClose"
       :delete-user="deleteUser"
     />
-  </Modal>
+  </el-dialog>
 </template>
 
 <script>
 import EditUserModal from './EditUserModal.vue';
 import DeleteUserModal from './DeleteUserModal.vue';
-import Modal from '../modal/Modal.vue';
 
 export default {
   components: {
-    Modal,
     EditUserModal,
     DeleteUserModal,
   },
@@ -90,13 +133,15 @@ export default {
     };
   },
   methods: {
+    formatterDate(row) {
+      return this.day(row.created_at).format('YYYY-MM-DD');
+    },
     /**
      * 關閉彈窗
      */
     onClose() {
       this.showEditModal = false;
       this.showDeleteModal = false;
-      this.user = {};
     },
     /**
      * 開啟編輯彈窗
@@ -119,31 +164,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scope>
-.table-wrapper {
-  margin-bottom: 1rem;
-
-  table {
-    border: 1px solid #333;
-    width: 100%;
-    padding: 1rem;
-    text-align: center;
-
-    th {
-      border-bottom: 1px solid #666;
-      background: #a6a6a6;
-      color: #333;
-    }
-
-    th,
-    td {
-      padding: 0.3rem 0;
-    }
-
-    td > button {
-      margin-right: 0.5rem;
-    }
-  }
-}
-</style>
