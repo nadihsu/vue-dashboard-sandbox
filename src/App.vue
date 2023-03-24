@@ -1,13 +1,13 @@
 <template>
   <div class="wrapper">
-    <div class="main-layout">
-      <aside>
+    <el-container class="main-layout">
+      <el-aside width="10rem">
         <Sidebar />
-      </aside>
-      <div class="main-content">
-        <router-view ter-view />
-      </div>
-    </div>
+      </el-aside>
+      <el-main class="main-content">
+        <router-view />
+      </el-main>
+    </el-container>
   </div>
 </template>
 
@@ -39,9 +39,8 @@ export default {
   aside {
     position: relative;
     height: 100%;
-    background: #fff;
-    width: 10rem;
     padding: 1rem;
+    background-color: #F6F6F6;
   }
 
   .main-content {

@@ -1,22 +1,16 @@
 <template>
-  <div class="modal">
-    <div class="modal-title">
-      刪除使用者
-    </div>
-    <div class="modal-content">
-      <p>
-        請問確認刪除 <span>{{ user.username }}</span> ?
-      </p>
-    </div>
-    <div class="modal-actions">
-      <button @click="closeModal">
-        取消
-      </button>
-      <button @click="submitUser">
-        刪除
-      </button>
-    </div>
-  </div>
+  <span>
+    確認刪除？
+  </span>
+  <span class="dialog-footer">
+    <el-button @click="closeModal">取消</el-button>
+    <el-button
+      type="primary"
+      @click="submitUser"
+    >
+      刪除
+    </el-button>
+  </span>
 </template>
 
 <script>
@@ -51,3 +45,14 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+  .dialog-footer {
+    display: block;
+    text-align: center;
+
+    button:first-child {
+      margin-right: 10px;
+    }
+  }
+</style>

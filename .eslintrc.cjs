@@ -4,18 +4,15 @@ require('@rushstack/eslint-patch/modern-module-resolution');
 module.exports = {
   root: true,
   extends: [
-    'airbnb-base',
     'plugin:vue/vue3-recommended',
     'eslint:recommended',
+    'airbnb-base',
   ],
   env: {
     browser: true,
     es6: true,
+    node: true,
   },
-  plugins: [
-    'vue',
-    'import',
-  ],
   parser: 'vue-eslint-parser',
   parserOptions: {
     sourceType: 'module',
@@ -24,7 +21,7 @@ module.exports = {
   rules: {
     'vue/component-name-in-template-casing': ['error', 'PascalCase'],
     'vue/multi-word-component-names': 'off',
-    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'import/no-extraneous-dependencies': 'off',
   },
   settings: {
     'import/resolver': {
@@ -32,6 +29,7 @@ module.exports = {
         map: [
           ['@', './src'],
         ],
+        extensions: ['.js', '.vue'],
       },
     },
   },

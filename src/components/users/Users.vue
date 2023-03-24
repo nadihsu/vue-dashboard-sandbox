@@ -3,38 +3,49 @@
     <div class="title">
       使用者名單
     </div>
-    <button @click="showCreateModal = true">
+    <el-button
+      type="primary"
+      icon="Edit"
+      @click="showCreateModal = true"
+    >
       新增
-    </button>
+    </el-button>
     <SearchUser :get-users="getUsers" />
     <UserList
       :data="data"
       :edit-user="editUser"
       :delete-user="deleteUser"
     />
-    <button
-      type="button"
-      @click="handlePagedChange(pager)"
-    >
-      頁碼
-    </button>
+    <div class="pagination-wrapper">
+      <el-pagination
+        background
+        layout="total, prev, pager, next, sizes"
+        :page-size="Number(pagination.max_results)"
+        :page-sizes="[20, 40, 100]"
+        :total="pagination.total"
+        @size-change="handleSizeChange"
+        @current-change="handlePagedChange"
+      />
+    </div>
   </div>
-  <Modal
-    v-if="showCreateModal"
-    @close="showCreateModal = false"
+  <el-dialog
+    v-model="showCreateModal"
+    title="新增使用者"
+    width="25%"
   >
-    <EditUserModal
-      :active="showCreateModal"
-      :close-modal="onClose"
-      :create-user="createUser"
-      :get-users="getUsers"
-    />
-  </Modal>
+    <template #default>
+      <EditUserModal
+        :active="showCreateModal"
+        :close-modal="onClose"
+        :create-user="createUser"
+        :get-users="getUsers"
+      />
+    </template>
+  </el-dialog>
 </template>
 
 <script>
 import request from '@/utils';
-import Modal from '../modal/Modal.vue';
 import UserList from './UserList.vue';
 import EditUserModal from './EditUserModal.vue';
 import SearchUser from './SearchUser.vue';
@@ -43,7 +54,6 @@ export default {
   components: {
     UserList,
     EditUserModal,
-    Modal,
     SearchUser,
   },
   data() {
@@ -53,6 +63,7 @@ export default {
       pagination: {
         first_result: 0,
         max_results: 20,
+        total: 0,
       },
       showCreateModal: false,
     };
@@ -68,6 +79,7 @@ export default {
       const result = {};
 
       Object.entries(data)
+        .filter(([, val]) => val)
         .filter(([, val]) => val !== -1) // 選項不限
         .forEach(([key, val]) => {
           result[key] = val;
@@ -93,10 +105,7 @@ export default {
 
       if (out?.result === 'ok') {
         this.data = out.ret;
-        this.pagination = {
-          first_result: out.pagination.first_result,
-          max_results: out.pagination.max_results,
-        };
+        this.pagination = out.pagination;
       }
     },
     /**
@@ -118,7 +127,6 @@ export default {
      * @param {object} data 變更使用者資料
      */
     async editUser(userId, data) {
-      console.log('passing editUser');
       const out = await request('PUT', `/user/${userId}`, data);
 
       if (out?.result === 'ok') {
@@ -151,9 +159,29 @@ export default {
       this.getUsers({ pagination: newPagination });
       this.pager += 1;
     },
+    /**
+     * 切換頁碼總數
+     */
+    handleSizeChange(val) {
+      const newPagination = {
+        ...this.pagination,
+        max_results: val,
+      };
+
+      this.getUsers({ pagination: newPagination });
+    },
+    /**
+     * 關閉新增彈窗
+     */
     onClose() {
       this.showCreateModal = false;
     },
   },
 };
 </script>
+
+<style scoped>
+  .pagination-wrapper {
+    margin-top: 1rem;
+  }
+</style>
