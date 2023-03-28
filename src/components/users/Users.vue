@@ -45,7 +45,8 @@
 </template>
 
 <script>
-import request from '@/utils';
+import { ref, onMounted } from 'vue';
+import { request } from '@/utils';
 import UserList from './UserList.vue';
 import EditUserModal from './EditUserModal.vue';
 import SearchUser from './SearchUser.vue';
@@ -56,126 +57,150 @@ export default {
     EditUserModal,
     SearchUser,
   },
-  data() {
-    return {
-      pager: 2,
-      data: [],
-      pagination: {
-        first_result: 0,
-        max_results: 20,
-        total: 0,
-      },
-      showCreateModal: false,
-    };
-  },
-  mounted() {
-    this.getUsers({ isSearching: true });
-  },
-  methods: {
+  setup() {
+    const showCreateModal = ref(false);
+    const pager = ref(2);
+    const data = ref([]);
+    const pagination = ref({
+      first_result: 0,
+      max_results: 20,
+      total: 0,
+    });
+
     /**
      * 處理查詢條件
      */
-    handleSubmitQuery(data) {
+    function handleSubmitQuery(dataData) {
       const result = {};
 
-      Object.entries(data)
-        .filter(([, val]) => val)
+      Object.entries(dataData)
         .filter(([, val]) => val !== -1) // 選項不限
+        .filter(([, val]) => (val !== '')) // 過濾沒有值的選項
         .forEach(([key, val]) => {
           result[key] = val;
         });
 
       return result;
-    },
+    }
+
     /**
      * 取得使用者
      *
      * @param {object} param0
      */
-    async getUsers({ isSearching = false, pagination = this.pagination, data = {} } = {}) {
-      const qs = this.handleSubmitQuery(data);
+    async function getUsers({
+      isSearching = false,
+      newPagination = pagination.value,
+      searchData = {},
+    } = {}) {
+      const qs = handleSubmitQuery(searchData);
 
       const payload = {
         ...qs,
-        first_result: isSearching ? 0 : pagination.first_result,
-        max_results: pagination.max_results,
+        first_result: isSearching ? 0 : newPagination.first_result,
+        max_results: newPagination.max_results,
       };
 
       const out = await request('GET', '/users', payload);
 
       if (out?.result === 'ok') {
-        this.data = out.ret;
-        this.pagination = out.pagination;
+        data.value = out.ret;
+        pagination.value = out.pagination;
       }
-    },
+    }
+
     /**
      * 新增使用者
      *
      * @param {object} data 新增的資料
      */
-    async createUser(data) {
-      const out = await request('POST', '/user', data);
+    async function createUser(userData) {
+      const out = await request('POST', '/user', { data: userData });
 
       if (out?.result === 'ok') {
-        this.getUsers();
+        getUsers();
       }
-    },
+    }
+
     /**
      * 編輯使用者
      *
      * @param {string} userId 使用者代號
-     * @param {object} data 變更使用者資料
+     * @param {object} userData 變更使用者資料
      */
-    async editUser(userId, data) {
-      const out = await request('PUT', `/user/${userId}`, data);
+    async function editUser(userId, userData) {
+      const out = await request('PUT', `/user/${userId}`, { data: userData });
 
       if (out?.result === 'ok') {
-        this.getUsers();
+        getUsers();
       }
-    },
+    }
+
     /**
      * 刪除使用者
      *
      * @param {string} userId 使用者代號
      */
-    async deleteUser(userId) {
+    async function deleteUser(userId) {
       const out = await request('DELETE', `/user/${userId}`);
 
       if (out?.result === 'ok') {
-        this.getUsers();
+        getUsers();
       }
-    },
+    }
+
     /**
      * 切換頁碼
      *
      * @param {number} pageNo
      */
-    handlePagedChange(pageNo) {
+    function handlePagedChange(pageNo) {
       const newPagination = {
-        ...this.pagination,
-        first_result: this.pagination.max_results * (pageNo - 1),
+        ...pagination.value,
+        first_result: pagination.value.max_results * (pageNo - 1),
       };
 
-      this.getUsers({ pagination: newPagination });
-      this.pager += 1;
-    },
+      getUsers({ newPagination });
+      pager.value += 1;
+    }
+
     /**
      * 切換頁碼總數
      */
-    handleSizeChange(val) {
+    function handleSizeChange(val) {
       const newPagination = {
-        ...this.pagination,
+        ...pagination.value,
         max_results: val,
       };
 
-      this.getUsers({ pagination: newPagination });
-    },
+      getUsers({ newPagination });
+    }
+
     /**
      * 關閉新增彈窗
      */
-    onClose() {
-      this.showCreateModal = false;
-    },
+    function onClose() {
+      showCreateModal.value = false;
+    }
+
+    onMounted(() => {
+      getUsers({ isSearching: true });
+    });
+
+    return {
+      showCreateModal,
+      pager,
+      data,
+      pagination,
+      handleSubmitQuery,
+      getUsers,
+      createUser,
+      editUser,
+      deleteUser,
+      handlePagedChange,
+      handleSizeChange,
+      onClose,
+    };
   },
 };
 </script>

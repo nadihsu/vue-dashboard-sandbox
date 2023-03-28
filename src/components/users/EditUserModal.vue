@@ -44,11 +44,11 @@
 </template>
 
 <script>
+import { reactive, ref } from 'vue';
+
 export default {
   props: {
-    showModal: {
-      type: Boolean,
-    },
+    showModal: Boolean,
     user: {
       type: Object,
       default() {
@@ -68,37 +68,40 @@ export default {
       default: () => {},
     },
   },
-  data() {
-    const { username, enable, locked } = this.user;
-    return {
-      form: {
-        username: username ?? '',
-        enable: enable ?? null,
-        locked: locked ?? null,
-      },
-    };
-  },
-  methods: {
-    /**
-     * 清空資料
-     */
-    clearUser() {
-      this.form = {};
-    },
-    /**
-     * 送出使用者資料
-     */
-    async submitUser() {
-      const { id } = this.user;
-      const { username, enable, locked } = this.form;
+  setup(props) {
+    const form = ref(reactive({
+      username: props.user.username ?? '',
+      enable: props.user.enable ?? null,
+      locked: props.user.locked ?? null,
+    }));
 
-      if (!Object.keys(this.form).length) {
+    /**
+     * 清空表單
+     */
+    function clearUser() {
+      form.value = {};
+    }
+
+    /**
+     * 送出表單
+     */
+    function submitUser() {
+      const {
+        user: { id },
+        editUser,
+        createUser,
+        closeModal,
+      } = props;
+
+      const { username, enable, locked } = form.value;
+
+      if (!Object.values(form.value).length) {
         return;
       }
 
       // 編輯
       if (id) {
-        this.editUser(id, {
+        editUser(id, {
           username,
           enable,
           locked,
@@ -107,12 +110,18 @@ export default {
 
       // 新增
       if (!id) {
-        this.createUser(this.form);
+        createUser(form);
       }
 
-      this.closeModal();
-      this.clearUser();
-    },
+      closeModal();
+      clearUser();
+    }
+
+    return {
+      form,
+      clearUser,
+      submitUser,
+    };
   },
 };
 </script>
