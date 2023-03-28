@@ -20,7 +20,7 @@ div
       template(#default="scope3")
         el-button(size="small", @click="openEditUserDialog(scope3.row)").
           編輯
-        el-button(type="danger", size="small", @click="openDeleteUserDialog(scope.row)").
+        el-button(type="danger", size="small", @click="openDeleteUserDialog(scope3.row)").
           刪除
 
 el-dialog(
