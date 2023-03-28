@@ -1,0 +1,84 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Users Page > 基本 1`] = `
+<div>
+  <div class="title"> 使用者名單 </div>
+  <button aria-disabled="false" class="el-button el-button--primary" type="button">
+    <i class="el-icon">
+      <edit></edit>
+    </i>
+    <span class> 新增 </span>
+  </button>
+  <search-user-stub getusers="[Function]"></search-user-stub>
+  <user-list-stub data deleteuser="[Function]" edituser="[Function]"></user-list-stub>
+  <div class="pagination-wrapper">
+    <div class="el-pagination is-background">
+      <span class="el-pagination__total is-first" disabled="false">Total 0</span>
+      <button aria-disabled="true" aria-label="Go to previous page" class="btn-prev" disabled type="button">
+        <i class="el-icon">
+          <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <path d="M609.408 149.376 277.76 489.6a32 32 0 0 0 0 44.672l331.648 340.352a29.12 29.12 0 0 0 41.728 0 30.592 30.592 0 0 0 0-42.752L339.264 511.936l311.872-319.872a30.592 30.592 0 0 0 0-42.688 29.12 29.12 0 0 0-41.728 0z" fill="currentColor" />
+          </svg>
+        </i>
+      </button>
+      <ul class="el-pager">
+        <li aria-current="true" aria-label="page 1" class="is-active number" tabindex="0"> 1 </li>
+        <!--v-if-->
+        <!--v-if-->
+        <!--v-if-->
+      </ul>
+      <button aria-disabled="true" aria-label="Go to next page" class="btn-next" disabled type="button">
+        <i class="el-icon">
+          <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+            <path d="M340.864 149.312a30.592 30.592 0 0 0 0 42.752L652.736 512 340.864 831.872a30.592 30.592 0 0 0 0 42.752 29.12 29.12 0 0 0 41.728 0L714.24 534.336a32 32 0 0 0 0-44.672L382.592 149.376a29.12 29.12 0 0 0-41.728 0z" fill="currentColor" />
+          </svg>
+        </i>
+      </button>
+      <span class="el-pagination__sizes is-last">
+        <div class="el-select el-select--default">
+          <div class="select-trigger el-tooltip__trigger el-tooltip__trigger">
+            <!--v-if-->
+            <!-- fix: https://github.com/element-plus/element-plus/issues/11415 -->
+            <!--v-if-->
+            <div class="el-input el-input--default el-input--suffix">
+              <!-- input -->
+              <!-- prepend slot -->
+              <!--v-if-->
+              <div class="el-input__wrapper">
+                <!-- prefix slot -->
+                <!--v-if-->
+                <input autocomplete="off" class="el-input__inner" placeholder="Select" readonly tabindex="0" type="text"><!-- suffix slot -->
+                <span class="el-input__suffix">
+                  <span class="el-input__suffix-inner">
+                    <i class="el-icon el-select__caret el-select__icon">
+                      <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M831.872 340.864 512 652.672 192.128 340.864a30.592 30.592 0 0 0-42.752 0 29.12 29.12 0 0 0 0 41.6L489.664 714.24a32 32 0 0 0 44.672 0l340.288-331.712a29.12 29.12 0 0 0 0-41.728 30.592 30.592 0 0 0-42.752 0z" fill="currentColor" />
+                      </svg>
+                    </i>
+                    <!--v-if-->
+                    <!--v-if-->
+                    <!--v-if-->
+                    <!--v-if-->
+                    <!--v-if-->
+                    <!--v-if-->
+                  </span>
+                </span>
+              </div><!-- append slot -->
+              <!--v-if-->
+            </div>
+          </div>
+          <!--teleport start-->
+          <!--teleport end-->
+        </div>
+      </span>
+    </div>
+  </div>
+</div>
+<!--teleport start-->
+<transition-stub appear="false" css="true" name="dialog-fade" persisted="true">
+  <div class="el-overlay" style="z-index: 2002; display: none;">
+    <div aria-describedby aria-label="新增使用者" aria-modal="true" class="el-overlay-dialog" role="dialog"></div>
+  </div>
+</transition-stub>
+<!--teleport end-->
+`;

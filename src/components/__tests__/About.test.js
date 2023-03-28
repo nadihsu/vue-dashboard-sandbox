@@ -1,12 +1,10 @@
-import { describe, it, expect } from 'vitest';
-import { mount } from '@vue/test-utils';
+import { render } from '@testing-library/vue';
 import About from '../About.vue';
 
 describe('About Page', () => {
   it('基本', () => {
-    const render = mount(About);
+    const setup = render(About);
 
-    expect(render.text()).toContain('This is about page');
-    expect(render.html()).toMatchSnapshot();
+    expect(setup.html()).toMatchSnapshot();
   });
 });

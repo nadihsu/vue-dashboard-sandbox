@@ -4,6 +4,7 @@ require('@rushstack/eslint-patch/modern-module-resolution');
 module.exports = {
   root: true,
   extends: [
+    'plugin:vitest-globals/recommended',
     'plugin:vue/vue3-recommended',
     'eslint:recommended',
     'airbnb-base',
@@ -12,6 +13,7 @@ module.exports = {
     browser: true,
     es6: true,
     node: true,
+    'vitest-globals/env': true,
   },
   parser: 'vue-eslint-parser',
   parserOptions: {

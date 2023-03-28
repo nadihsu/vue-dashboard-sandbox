@@ -8,7 +8,7 @@ import 'element-plus/dist/index.css';
 
 const app = createApp(App);
 
-app.config.globalProperties.day = dayjs;
+app.config.globalProperties.$day = dayjs;
 
 Object.keys(ElementPlusIconsVue).forEach((key) => {
   app.component(key, ElementPlusIconsVue[key]);
