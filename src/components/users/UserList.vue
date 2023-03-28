@@ -1,105 +1,51 @@
-<template>
-  <div>
-    <el-table
-      :data="data"
-      stripe
-      border
-    >
-      <el-table-column
-        prop="id"
-        label="序"
-      />
+<template lang="pug">
+div
+  el-table(:data="data", stripe, border)
+    el-table-column(prop="id", label="序")
+    el-table-column(prop="username", label="使用者")
+    el-table-column(prop="created_at", label="建立時間", :formatter="formatterDate")
 
-      <el-table-column
-        prop="username"
-        label="使用者"
-      />
+    el-table-column(prop="enable", label="啟用", align="center")
+      template(#default="scope")
+        el-tag(:type="scope.row.enable ? 'success' : 'danger'").
+          {{ scope.row.enable ? '啟用' : '停用' }}
 
-      <el-table-column
-        prop="created_at"
-        label="建立時間"
-        :formatter="formatterDate"
-      />
+    el-table-column(prop="locked", label="鎖定", align="center")
+      template(#default="scope2")
+        el-icon(:size="20")
+          i-ep-lock(v-if="scope2.row.locked", color="#999")
+          i-ep-unlock(v-else).
 
-      <el-table-column
-        prop="enable"
-        label="啟用"
-        align="center"
-      >
-        <template #default="scope">
-          <el-tag :type="scope.row.enable ? 'success' : 'danger'">
-            {{ scope.row.enable ? '啟用' : '停用' }}
-          </el-tag>
-        </template>
-      </el-table-column>
+    el-table-column(label="操作", align="center")
+      template(#default="scope3")
+        el-button(size="small", @click="openEditUserDialog(scope3.row)").
+          編輯
+        el-button(type="danger", size="small", @click="openDeleteUserDialog(scope.row)").
+          刪除
 
-      <el-table-column
-        prop="locked"
-        label="鎖定"
-        align="center"
-      >
-        <template #default="scope">
-          <el-icon :size="20">
-            <i-ep-Lock
-              v-if="scope.row.locked"
-              color="#999"
-            />
-            <i-ep-unlock v-else />
-          </el-icon>
-        </template>
-      </el-table-column>
+el-dialog(
+v-model="showEditModal",
+:title="`編輯使用者: ${user.username}`",
+width="25%",
+destroy-on-close)
+  edit-user-modal(
+  :active="showEditModal",
+  :user="user",
+  :close-modal="onClose",
+  :edit-user="editUser").
 
-      <el-table-column
-        label="操作"
-        align="center"
-      >
-        <template #default="scope">
-          <el-button
-            size="small"
-            @click="openEditUserDialog(scope.row)"
-          >
-            編輯
-          </el-button>
-          <el-button
-            type="danger"
-            size="small"
-            @click="openDeleteUserDialog(scope.row)"
-          >
-            刪除
-          </el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-  </div>
+el-dialog(
+v-model="showDeleteModal",
+:title="`刪除使用者: ${user.username}`",
+width="25%",
+center,
+destroy-on-close)
+  delete-user-modal(
+  :active="showDeleteModal",
+  :user="user",
+  :close-modal="onClose",
+  :delete-user="deleteUser").
 
-  <el-dialog
-    v-model="showEditModal"
-    :title="`編輯使用者: ${user.username}`"
-    width="25%"
-    destroy-on-close
-  >
-    <EditUserModal
-      :active="showEditModal"
-      :user="user"
-      :close-modal="onClose"
-      :edit-user="editUser"
-    />
-  </el-dialog>
-
-  <el-dialog
-    v-model="showDeleteModal"
-    :title="`刪除使用者: ${user.username}`"
-    width="25%"
-    center
-    destroy-on-close
-  >
-    <DeleteUserModal
-      :active="showDeleteModal"
-      :user="user"
-      :close-modal="onClose"
-      :delete-user="deleteUser"
-    />
-  </el-dialog>
 </template>
 
 <script>
@@ -108,7 +54,7 @@ import EditUserModal from './EditUserModal.vue';
 import DeleteUserModal from './DeleteUserModal.vue';
 
 export default {
-  components: [EditUserModal, DeleteUserModal],
+  components: { EditUserModal, DeleteUserModal },
   props: {
     data: {
       type: Array,

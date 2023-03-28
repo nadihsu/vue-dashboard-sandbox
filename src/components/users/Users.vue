@@ -1,47 +1,28 @@
-<template>
-  <div>
-    <div class="title">
-      使用者名單
-    </div>
-    <el-button
-      type="primary"
-      icon="Edit"
-      @click="showCreateModal = true"
-    >
-      新增
-    </el-button>
-    <SearchUser :get-users="getUsers" />
-    <UserList
-      :data="data"
-      :edit-user="editUser"
-      :delete-user="deleteUser"
-    />
-    <div class="pagination-wrapper">
-      <el-pagination
-        background
-        layout="total, prev, pager, next, sizes"
-        :page-size="Number(pagination.max_results)"
-        :page-sizes="[20, 40, 100]"
-        :total="pagination.total"
-        @size-change="handleSizeChange"
-        @current-change="handlePagedChange"
-      />
-    </div>
-  </div>
-  <el-dialog
-    v-model="showCreateModal"
-    title="新增使用者"
-    width="25%"
-  >
-    <template #default>
-      <EditUserModal
-        :active="showCreateModal"
-        :close-modal="onClose"
-        :create-user="createUser"
-        :get-users="getUsers"
-      />
-    </template>
-  </el-dialog>
+<template lang="pug">
+div
+  .title 使用者名單
+
+  el-button(type="primary", icon="Edit", @click="showCreateModal = true") 新增
+
+  SearchUser(:get-users="getUsers")
+  UserList(:data="data", :edit-user="editUser", :delete-user="deleteUser")
+  .pagination-wrapper
+    el-pagination(
+    background,
+    layout="total, prev, pager, next, sizes",
+    :page-size="Number(pagination.max_results)",
+    :page-sizes="[20, 40, 100]",
+    :total="pagination.total",
+    @size-change="handleSizeChange",
+    @current-change="handlePagedChange").
+
+el-dialog(v-model="showCreateModal", title="新增使用者", width="25%")
+  template(#default)
+    EditUserModal(
+    :active="showCreateModal",
+    :close-modal="onClose",
+    :create-user="createUser",
+    :get-users="getUsers")
 </template>
 
 <script>
@@ -112,10 +93,10 @@ export default {
     /**
      * 新增使用者
      *
-     * @param {object} data 新增的資料
+     * @param {object} userData 新增的資料
      */
     async function createUser(userData) {
-      const out = await request('POST', '/user', { data: userData });
+      const out = await request('POST', '/user', userData);
 
       if (out?.result === 'ok') {
         getUsers();
@@ -129,7 +110,7 @@ export default {
      * @param {object} userData 變更使用者資料
      */
     async function editUser(userId, userData) {
-      const out = await request('PUT', `/user/${userId}`, { data: userData });
+      const out = await request('PUT', `/user/${userId}`, userData);
 
       if (out?.result === 'ok') {
         getUsers();

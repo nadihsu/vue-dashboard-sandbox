@@ -1,66 +1,41 @@
-<template>
-  <div class="search-wrap">
-    <el-form
-      label-position="top"
-      label-width="100px"
-    >
-      <el-form-item label="使用者">
-        <el-input v-model="data.username" />
-      </el-form-item>
+<template lang="pug">
+.search-wrap
+  el-form(label-position="top", label-width="100px")
+    el-form-item(label="使用者")
+      el-input(v-model="data.username").
 
-      <el-form-item label="啟用">
-        <el-select
-          v-model="data.enable"
-        >
-          <el-option
-            v-for="item in enableOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
-      </el-form-item>
+    el-form-item(label="啟用")
+      el-select(v-model="data.enable")
+        el-option(
+        v-for="item in enableOptions",
+        :key="item.value",
+        :label="item.label",
+        :value="item.value").
 
-      <el-form-item label="鎖定">
-        <el-select
-          v-model="data.locked"
-        >
-          <el-option
-            v-for="item in lockedOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
-        </el-select>
-      </el-form-item>
+    el-form-item(label="鎖定")
+      el-select(v-model="data.locked")
+        el-option(
+        v-for="item in lockedOptions",
+        :key="item.value",
+        :label="item.label",
+        :value="item.value").
 
-      <el-form-item label="建立日期">
-        <el-date-picker
-          v-model="data.created_at"
-          type="daterange"
-          start-placeholder="起"
-          end-placeholder="迄"
-          format="YYYY/MM/DD"
-          value-format="YYYY-MM-DD"
-        />
-      </el-form-item>
+    el-form-item(label="建立日期")
+      el-date-picker(
+      v-model="data.created_at",
+      type="daterange",
+      start-placeholder="起",
+      end-placeholder="迄",
+      format="YYYY/MM/DD",
+      value-format="YYYY-MM-DD").
 
-      <el-form-item>
-        <el-button
-          type="primary"
-          @click="searchUsers"
-        >
-          搜尋
-        </el-button>
-      </el-form-item>
+    el-form-item
+      el-button(type="primary", @click="searchUsers").
+        搜尋
 
-      <el-form-item>
-        <el-button @click="resetSearch">
-          清除
-        </el-button>
-      </el-form-item>
-    </el-form>
-  </div>
+    el-form-item
+      el-button(@click="resetSearch").
+        清除
 </template>
 
 <script>

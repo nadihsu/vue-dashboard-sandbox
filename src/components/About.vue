@@ -1,5 +1,4 @@
-<template>
-  <div>
-    <p>This is about page</p>
-  </div>
+<template lang="pug">
+div
+  p This is about page
 </template>

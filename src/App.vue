@@ -1,18 +1,18 @@
-<template>
-  <div class="wrapper">
-    <el-container class="main-layout">
-      <el-aside width="10rem">
-        <Sidebar />
-      </el-aside>
-      <el-main class="main-content">
-        <router-view />
-      </el-main>
-    </el-container>
-  </div>
+<template lang="pug">
+.wrapper
+  el-container.main-layout
+    el-aside(width="10rem")
+      sidebar.
+    el-main.main-content
+      router-view.
 </template>
 
-<script setup>
+<script>
 import Sidebar from './components/Sidebar.vue';
+
+export default {
+  components: { Sidebar },
+};
 </script>
 
 <style lang="scss">

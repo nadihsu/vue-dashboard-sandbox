@@ -122,11 +122,11 @@ exports[`User Lists Page > 基本 1`] = `
                         <!---->
                         <button aria-disabled="false" class="el-button el-button--small" type="button">
                           <!--v-if-->
-                          <span class> 編輯 </span>
+                          <span class>編輯</span>
                         </button>
                         <button aria-disabled="false" class="el-button el-button--danger el-button--small" type="button">
                           <!--v-if-->
-                          <span class> 刪除 </span>
+                          <span class>刪除 </span>
                         </button>
                       </div>
                     </td>

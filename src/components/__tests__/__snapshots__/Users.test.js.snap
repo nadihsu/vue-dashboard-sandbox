@@ -2,12 +2,12 @@
 
 exports[`Users Page > 基本 1`] = `
 <div>
-  <div class="title"> 使用者名單 </div>
+  <div class="title">使用者名單</div>
   <button aria-disabled="false" class="el-button el-button--primary" type="button">
     <i class="el-icon">
       <edit></edit>
     </i>
-    <span class> 新增 </span>
+    <span class>新增</span>
   </button>
   <search-user-stub getusers="[Function]"></search-user-stub>
   <user-list-stub data deleteuser="[Function]" edituser="[Function]"></user-list-stub>

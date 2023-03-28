@@ -1,16 +1,10 @@
-<template>
-  <span>
-    確認刪除？
-  </span>
-  <span class="dialog-footer">
-    <el-button @click="closeModal">取消</el-button>
-    <el-button
-      type="primary"
-      @click="submitUser"
-    >
-      刪除
-    </el-button>
-  </span>
+<template lang="pug">
+span.
+  確認刪除？
+span.dialog-footer
+  el-button(@click="closeModal") 取消
+  el-button(type="primary", @click="submitUser").
+    刪除
 </template>
 
 <script setup>

@@ -1,10 +1,8 @@
-<template>
-  <router-link to="/">
-    Users
-  </router-link>
-  <router-link to="/about">
-    About
-  </router-link>
+<template lang="pug">
+router-link(to="/").
+  Users
+router-link(to="/about").
+  About
 </template>
 
 <style scope lang="scss">
