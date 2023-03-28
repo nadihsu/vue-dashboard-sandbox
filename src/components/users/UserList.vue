@@ -103,14 +103,12 @@
 </template>
 
 <script>
+import { ref, getCurrentInstance } from 'vue';
 import EditUserModal from './EditUserModal.vue';
 import DeleteUserModal from './DeleteUserModal.vue';
 
 export default {
-  components: {
-    EditUserModal,
-    DeleteUserModal,
-  },
+  components: [EditUserModal, DeleteUserModal],
   props: {
     data: {
       type: Array,
@@ -125,42 +123,58 @@ export default {
       default: () => {},
     },
   },
-  data() {
-    return {
-      showEditModal: false,
-      showDeleteModal: false,
-      user: {},
-    };
-  },
-  methods: {
-    formatterDate(row) {
-      return this.$day(row.created_at).format('YYYY-MM-DD');
-    },
+  setup() {
+    const { proxy } = getCurrentInstance();
+    const showEditModal = ref(false);
+    const showDeleteModal = ref(false);
+    const user = ref({});
+
+    /**
+     * 日期格式化
+     *
+     * @param {{ created_at: string }} row 使用者建立日期
+     */
+    function formatterDate(row) {
+      return proxy.$day(row.created_at).format('YYYY-MM-DD');
+    }
+
     /**
      * 關閉彈窗
      */
-    onClose() {
-      this.showEditModal = false;
-      this.showDeleteModal = false;
-    },
+    function onClose() {
+      showEditModal.value = false;
+      showDeleteModal.value = false;
+    }
+
     /**
      * 開啟編輯彈窗
      *
-     * @param {object} user
+     * @param {object} userData
      */
-    openEditUserDialog(user) {
-      this.showEditModal = true;
-      this.user = user;
-    },
+    function openEditUserDialog(userData) {
+      showEditModal.value = true;
+      user.value = userData;
+    }
+
     /**
      * 開啟刪除彈窗
      *
-     * @param {object} user
+     * @param {object} userData
      */
-    openDeleteUserDialog(user) {
-      this.showDeleteModal = true;
-      this.user = user;
-    },
+    function openDeleteUserDialog(userData) {
+      showDeleteModal.value = true;
+      user.value = userData;
+    }
+
+    return {
+      showEditModal,
+      showDeleteModal,
+      user,
+      formatterDate,
+      onClose,
+      openEditUserDialog,
+      openDeleteUserDialog,
+    };
   },
 };
 </script>

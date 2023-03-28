@@ -35,14 +35,6 @@
       </el-form-item>
 
       <el-form-item label="建立日期">
-        <!-- <el-date-picker
-          v-model="data.created_at"
-          format="YYYY/MM/DD"
-          value-format="YYYY-MM-DD"
-          type="date"
-          placeholder="請選擇"
-          size="default"
-        /> -->
         <el-date-picker
           v-model="data.created_at"
           type="daterange"
@@ -72,6 +64,8 @@
 </template>
 
 <script>
+import { ref } from 'vue';
+
 const initData = {
   username: '',
   enable: -1,
@@ -116,21 +110,16 @@ export default {
       default: () => {},
     },
   },
-  data() {
-    return {
-      data: { ...initData },
-      enableOptions,
-      lockedOptions,
-    };
-  },
-  methods: {
+  setup(props) {
+    const data = ref({ ...initData });
+
     /**
      * 查詢使用者
      */
-    async searchUsers() {
-      const [startCreatedAt, endCreatedAt] = this.data.created_at;
+    async function searchUsers() {
+      const [startCreatedAt, endCreatedAt] = data.value.created_at;
       const payload = {
-        ...this.data,
+        ...data.value,
         ...((startCreatedAt && endCreatedAt) && {
           start_created_at: startCreatedAt,
           end_created_at: endCreatedAt,
@@ -139,14 +128,23 @@ export default {
 
       delete payload.created_at;
 
-      this.getUsers({ isSearching: true, data: payload });
-    },
+      props.getUsers({ isSearching: true, searchData: payload });
+    }
+
     /**
      * 恢復查詢條件
      */
-    resetSearch() {
-      this.data = initData;
-    },
+    function resetSearch() {
+      data.value = { ...initData };
+    }
+
+    return {
+      data,
+      enableOptions,
+      lockedOptions,
+      searchUsers,
+      resetSearch,
+    };
   },
 };
 </script>

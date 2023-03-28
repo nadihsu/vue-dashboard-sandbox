@@ -13,37 +13,32 @@
   </span>
 </template>
 
-<script>
-export default {
-  props: {
-    active: {
-      type: Boolean,
-    },
-    user: {
-      type: Object,
-      default() {
-        return {};
-      },
-    },
-    closeModal: {
-      type: Function,
-      default: () => {},
-    },
-    deleteUser: {
-      type: Function,
-      default: () => {},
+<script setup>
+const props = defineProps({
+  active: Boolean,
+  user: {
+    type: Object,
+    default() {
+      return {};
     },
   },
-  methods: {
-    /**
-     * 刪除使用者
-     */
-    async submitUser() {
-      this.deleteUser(this.user.id);
-      this.closeModal();
-    },
+  closeModal: {
+    type: Function,
+    default: () => {},
   },
-};
+  deleteUser: {
+    type: Function,
+    default: () => {},
+  },
+});
+
+/**
+ * 刪除使用者
+ */
+async function submitUser() {
+  props.deleteUser(props.user.id);
+  props.closeModal();
+}
 </script>
 
 <style lang="scss" scoped>
