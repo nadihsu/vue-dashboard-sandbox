@@ -40,11 +40,11 @@
       >
         <template #default="scope">
           <el-icon :size="20">
-            <Lock
+            <i-ep-Lock
               v-if="scope.row.locked"
               color="#999"
             />
-            <Unlock v-else />
+            <i-ep-unlock v-else />
           </el-icon>
         </template>
       </el-table-column>
@@ -134,7 +134,7 @@ export default {
   },
   methods: {
     formatterDate(row) {
-      return this.day(row.created_at).format('YYYY-MM-DD');
+      return this.$day(row.created_at).format('YYYY-MM-DD');
     },
     /**
      * 關閉彈窗
