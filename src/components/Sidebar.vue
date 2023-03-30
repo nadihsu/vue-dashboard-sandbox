@@ -1,8 +1,8 @@
 <template lang="pug">
 router-link(to="/").
-  Users
+  {{ $t('SIDEBAR.USER') }}
 router-link(to="/about").
-  About
+  {{ $t('SIDEBAR.ABOUT') }}
 </template>
 
 <style scope lang="scss">

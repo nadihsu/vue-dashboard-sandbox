@@ -1,27 +1,27 @@
 <template lang="pug">
 el-form(:model="form", label-width="80")
-  el-form-item(label="使用者")
+  el-form-item(:label="$t('M_USERNAME')")
     el-input(v-model="form.username").
 
-  el-form-item(label="啟用")
+  el-form-item(:label="$t('M_ENABLE_STATE')")
     el-radio-group(v-model="form.enable")
       el-radio(:label="Number(1)").
-        啟用
+        {{ $t('M_ENABLED') }}
       el-radio(:label="Number(0)").
-        停用
+        {{ $t('M_DISABLED') }}
 
-  el-form-item(label="鎖定")
+  el-form-item(:label="$t('M_LOCKED_STATE')")
     el-radio-group(v-model="form.locked")
       el-radio(:label="Number(1)").
-        鎖定
+        {{ $t('M_LOCKED') }}
       el-radio(:label="Number(0)").
-        解鎖
+        {{ $t('M_UNLOCKED') }}
 
   el-form-item
     el-button(@click="clearUser").
-      清空
+      {{ $t('ACTION.RESET') }}
     el-button(type="primary", @click="submitUser").
-      {{ user.id ? '編輯' : '新增' }}
+      {{ user.id ? $t('ACTION.EDIT') : $t('ACTION_CREATED') }}
 </template>
 
 <script>

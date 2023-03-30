@@ -1,0 +1,34 @@
+{
+  "M_USER_TITLE": "User List",
+  "M_USERNAME": "Username",
+  "M_ENABLE_STATE": "Enable State",
+  "M_LOCKED_STATE": "Locked State",
+  "M_CREATED_AT": "Created At",
+  "M_CREATED_START_AT": "Start Day",
+  "M_CREATED_END_AT": "End Day",
+  "M_ID": "ID",
+  "M_OPERATOR": "Operator",
+  "M_ENABLED": "Enable",
+  "M_DISABLED": "Disabled",
+  "M_LOCKED": "Locked",
+  "M_UNLOCKED": "Unlocked",
+  "M_CREATED_USER": "Created New User",
+  "M_EDITED_USER": "Edit User",
+  "M_DELETED_USER": "Delete User",
+  "M_WITHOUT_LIMIT": "Without Limit",
+  "M_CONFIRM_DELETE": "Confirm Deletion?",
+  "M_LANG": "Language",
+  "ACTION": {
+    "CREATED": "Created",
+    "EDIT": "Edit",
+    "DELETE": "Delete",
+    "RESET": "Reset",
+    "SEARCH": "Search",
+    "CLEAR": "Clear",
+    "CANCEL": "Cancel"
+  },
+  "SIDEBAR": {
+    "USER": "User Manager",
+    "ABOUT": "About us"
+  }
+}

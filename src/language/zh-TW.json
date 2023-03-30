@@ -1,0 +1,34 @@
+{
+  "M_USER_TITLE": "使用者名單",
+  "M_USERNAME": "使用者",
+  "M_ENABLE_STATE": "啟/停用狀態",
+  "M_LOCKED_STATE": "鎖定狀態",
+  "M_CREATED_AT": "建立日期",
+  "M_CREATED_START_AT": "起",
+  "M_CREATED_END_AT": "迄",
+  "M_ID": "序",
+  "M_OPERATOR": "操作",
+  "M_ENABLED": "啟用",
+  "M_DISABLED": "停用",
+  "M_LOCKED": "已鎖定",
+  "M_UNLOCKED": "未鎖定",
+  "M_CREATED_USER": "新增使用者",
+  "M_EDITED_USER": "編輯使用者",
+  "M_DELETED_USER": "刪除使用者",
+  "M_WITHOUT_LIMIT": "不限",
+  "M_CONFIRM_DELETE": "確認刪除?",
+  "M_LANG": "語系",
+  "ACTION": {
+    "CREATED": "新增",
+    "EDIT": "編輯",
+    "DELETE": "刪除",
+    "RESET": "重置",
+    "SEARCH": "搜尋",
+    "CLEAR": "清除",
+    "CANCEL": "取消"
+  },
+  "SIDEBAR": {
+    "USER": "使用者管理",
+    "ABOUT": "關於我"
+  }
+}
