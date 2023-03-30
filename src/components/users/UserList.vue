@@ -1,31 +1,31 @@
 <template lang="pug">
 div
   el-table(:data="data", stripe, border)
-    el-table-column(prop="id", label="序")
-    el-table-column(prop="username", label="使用者")
-    el-table-column(prop="created_at", label="建立時間", :formatter="formatterDate")
+    el-table-column(prop="id", :label="$t('M_ID')")
+    el-table-column(prop="username", :label="$t('M_USERNAME')")
+    el-table-column(prop="created_at", :label="$t('M_CREATED_AT')", :formatter="formatterDate")
 
-    el-table-column(prop="enable", label="啟用", align="center")
+    el-table-column(prop="enable", :label="$t('M_ENABLE_STATE')", align="center")
       template(#default="scope")
         el-tag(:type="scope.row.enable ? 'success' : 'danger'").
-          {{ scope.row.enable ? '啟用' : '停用' }}
+          {{ scope.row.enable ? $t('M_ENABLED') : $t('M_DISABLED') }}
 
-    el-table-column(prop="locked", label="鎖定", align="center")
+    el-table-column(prop="locked", :label="$t('M_LOCKED_STATE')", align="center")
       template(#default="scope2")
         el-icon(:size="20")
           i-ep-lock(v-if="scope2.row.locked", color="#999")
           i-ep-unlock(v-else).
 
-    el-table-column(label="操作", align="center")
+    el-table-column(:label="$t('M_OPERATOR')", align="center")
       template(#default="scope3")
         el-button(size="small", @click="openEditUserDialog(scope3.row)").
-          編輯
+          {{ $t('ACTION.EDIT') }}
         el-button(type="danger", size="small", @click="openDeleteUserDialog(scope3.row)").
-          刪除
+          {{ $t('ACTION.DELETE') }}
 
 el-dialog(
 v-model="showEditModal",
-:title="`編輯使用者: ${user.username}`",
+:title="`${$t('M_EDITED_USER')}: ${user.username}`",
 width="25%",
 destroy-on-close)
   edit-user-modal(
@@ -36,7 +36,7 @@ destroy-on-close)
 
 el-dialog(
 v-model="showDeleteModal",
-:title="`刪除使用者: ${user.username}`",
+:title="`${$t('M_DELETED_USER')}: ${user.username}`",
 width="25%",
 center,
 destroy-on-close)

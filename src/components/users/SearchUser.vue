@@ -1,10 +1,10 @@
 <template lang="pug">
 .search-wrap
   el-form(label-position="top", label-width="100px")
-    el-form-item(label="使用者")
+    el-form-item(:label="$t('M_USERNAME')")
       el-input(v-model="data.username").
 
-    el-form-item(label="啟用")
+    el-form-item(:label="$t('M_ENABLE_STATE')")
       el-select(v-model="data.enable")
         el-option(
         v-for="item in enableOptions",
@@ -12,7 +12,7 @@
         :label="item.label",
         :value="item.value").
 
-    el-form-item(label="鎖定")
+    el-form-item(:label="$t('M_LOCKED_STATE')")
       el-select(v-model="data.locked")
         el-option(
         v-for="item in lockedOptions",
@@ -20,26 +20,26 @@
         :label="item.label",
         :value="item.value").
 
-    el-form-item(label="建立日期")
+    el-form-item(:label="$t('M_CREATED_AT')")
       el-date-picker(
       v-model="data.created_at",
       type="daterange",
-      start-placeholder="起",
-      end-placeholder="迄",
+      :start-placeholder="$t('M_CREATED_START_AT')",
+      :end-placeholder="$t('M_CREATED_END_AT')",
       format="YYYY/MM/DD",
       value-format="YYYY-MM-DD").
 
     el-form-item
       el-button(type="primary", @click="searchUsers").
-        搜尋
+        {{ $t('ACTION.SEARCH') }}
 
     el-form-item
       el-button(@click="resetSearch").
-        清除
+        {{ $t('ACTION.CLEAR') }}
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, getCurrentInstance, computed } from 'vue';
 
 const initData = {
   username: '',
@@ -47,36 +47,6 @@ const initData = {
   locked: -1,
   created_at: [],
 };
-
-const enableOptions = [
-  {
-    label: '不限',
-    value: -1,
-  },
-  {
-    label: '啟用',
-    value: 1,
-  },
-  {
-    label: '停用',
-    value: 0,
-  },
-];
-
-const lockedOptions = [
-  {
-    label: '不限',
-    value: -1,
-  },
-  {
-    label: '已鎖定',
-    value: 1,
-  },
-  {
-    label: '未鎖定',
-    value: 0,
-  },
-];
 
 export default {
   props: {
@@ -86,7 +56,42 @@ export default {
     },
   },
   setup(props) {
+    const { proxy } = getCurrentInstance();
     const data = ref({ ...initData });
+
+    const enableOptions = computed({
+      get: () => ([
+        {
+          label: proxy.$t('M_WITHOUT_LIMIT'),
+          value: -1,
+        },
+        {
+          label: proxy.$t('M_ENABLED'),
+          value: 1,
+        },
+        {
+          label: proxy.$t('M_DISABLED'),
+          value: 0,
+        },
+      ]),
+    });
+
+    const lockedOptions = computed({
+      get: () => ([
+        {
+          label: proxy.$t('M_WITHOUT_LIMIT'),
+          value: -1,
+        },
+        {
+          label: proxy.$t('M_LOCKED'),
+          value: 1,
+        },
+        {
+          label: proxy.$t('M_UNLOCKED'),
+          value: 0,
+        },
+      ]),
+    });
 
     /**
      * 查詢使用者

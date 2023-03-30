@@ -1,8 +1,8 @@
 <template lang="pug">
 div
-  .title 使用者名單
+  .title {{ $t('M_USER_TITLE') }}
 
-  el-button(type="primary", icon="Edit", @click="showCreateModal = true") 新增
+  el-button(type="primary", icon="Edit", @click="showCreateModal = true") {{ $t('ACTION.CREATED') }}
 
   SearchUser(:get-users="getUsers")
   UserList(:data="data", :edit-user="editUser", :delete-user="deleteUser")
@@ -16,7 +16,7 @@ div
     @size-change="handleSizeChange",
     @current-change="handlePagedChange").
 
-el-dialog(v-model="showCreateModal", title="新增使用者", width="25%")
+el-dialog(v-model="showCreateModal", :title="$t('M_CREATED_USER')", width="25%")
   template(#default)
     EditUserModal(
     :active="showCreateModal",

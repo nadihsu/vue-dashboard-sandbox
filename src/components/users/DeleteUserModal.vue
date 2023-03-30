@@ -1,10 +1,10 @@
 <template lang="pug">
 span.
-  確認刪除？
+  {{ $t('M_CONFIRM_DELETE') }}
 span.dialog-footer
-  el-button(@click="closeModal") 取消
+  el-button(@click="closeModal") {{ $t('ACTION.CANCEL') }}
   el-button(type="primary", @click="submitUser").
-    刪除
+    {{ $t('ACTION.DELETE') }}
 </template>
 
 <script setup>
