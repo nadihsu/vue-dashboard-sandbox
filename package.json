@@ -22,8 +22,10 @@
   },
   "devDependencies": {
     "@iconify-json/ep": "^1.1.10",
+    "@pinia/testing": "^0.0.15",
     "@rushstack/eslint-patch": "^1.2.0",
     "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/user-event": "^14.4.3",
     "@testing-library/vue": "^7.0.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vitest/coverage-c8": "^0.29.7",
@@ -52,7 +54,9 @@
     "sortAttributes": true,
     "verbose": true,
     "attributesToClear": [
-      "aria-describedby"
+      "aria-describedby",
+      "aria-controls",
+      "id"
     ]
   }
 }

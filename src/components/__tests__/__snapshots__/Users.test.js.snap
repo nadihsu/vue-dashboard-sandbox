@@ -2,12 +2,12 @@
 
 exports[`Users Page > 基本 1`] = `
 <div>
-  <div class="title">使用者名單</div>
+  <div class="title">M_USER_TITLE</div>
   <button aria-disabled="false" class="el-button el-button--primary" type="button">
     <i class="el-icon">
       <edit></edit>
     </i>
-    <span class>新增</span>
+    <span class>ACTION.CREATED</span>
   </button>
   <search-user-stub getusers="[Function]"></search-user-stub>
   <user-list-stub data deleteuser="[Function]" edituser="[Function]"></user-list-stub>
@@ -77,7 +77,7 @@ exports[`Users Page > 基本 1`] = `
 <!--teleport start-->
 <transition-stub appear="false" css="true" name="dialog-fade" persisted="true">
   <div class="el-overlay" style="z-index: 2002; display: none;">
-    <div aria-describedby aria-label="新增使用者" aria-modal="true" class="el-overlay-dialog" role="dialog"></div>
+    <div aria-describedby aria-label="M_CREATED_USER" aria-modal="true" class="el-overlay-dialog" role="dialog"></div>
   </div>
 </transition-stub>
 <!--teleport end-->

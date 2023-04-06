@@ -1,0 +1,36 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Main Page > 基本 1`] = `
+<div class="wrapper">
+  <section class="el-container main-layout">
+    <aside class="el-aside" style="--el-aside-width: 9rem;">
+      <a class href="#/">SIDEBAR.USER</a>
+      <a class href="#/about">SIDEBAR.ABOUT</a>
+    </aside>
+    <section class="el-container is-vertical">
+      <header class="el-header">
+        <ul class="el-menu el-menu--horizontal el-menu-demo" role="menubar" style="--el-menu-level: 0;">
+          <li class="el-menu-item" role="menuitem" tabindex="0">LEGO</li>
+          <div class="flex-grow" tabindex="0"></div>
+          <div class="right-menu-content" tabindex="0">
+            <div class="el-dropdown">
+              <span aria-controls aria-expanded="false" aria-haspopup="menu" class="el-dropdown-link el-tooltip__trigger el-tooltip__trigger" id role="button" tabindex="0">M_LANG<i class="el-icon el-icon--right">
+                  <svg height="1.2em" viewBox="0 0 1024 1024" width="1.2em">
+                    <path d="M831.872 340.864L512 652.672L192.128 340.864a30.592 30.592 0 0 0-42.752 0a29.12 29.12 0 0 0 0 41.6L489.664 714.24a32 32 0 0 0 44.672 0l340.288-331.712a29.12 29.12 0 0 0 0-41.728a30.592 30.592 0 0 0-42.752 0z" fill="currentColor" />
+                  </svg>
+                </i>
+              </span>
+              <!--teleport start-->
+              <!--teleport end-->
+              <!--v-if-->
+            </div>
+          </div>
+        </ul>
+      </header>
+      <main class="el-main main-content">
+        <!---->
+      </main>
+    </section>
+  </section>
+</div>
+`;

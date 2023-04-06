@@ -6,7 +6,8 @@
     "allowSyntheticDefaultImports": false,
     "baseUrl": "./",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "Tests/*": ["tests/*"]
     }
   },
   "exclude": ["node_modules", "public"]

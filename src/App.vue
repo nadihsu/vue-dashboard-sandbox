@@ -13,7 +13,7 @@
           el-menu-item LEGO
           .flex-grow
           .right-menu-content
-            el-dropdown(@command="handleLangChange")
+            el-dropdown(trigger="click" @command="handleLangChange")
               span.el-dropdown-link {{ $t('M_LANG') }}
                 el-icon.el-icon--right
                   i-ep-arrow-down

@@ -25,37 +25,37 @@ exports[`User Lists Page > 基本 1`] = `
           <thead class>
             <tr class>
               <th class="el-table_1_column_1 is-leaf el-table__cell" colspan="1" rowspan="1">
-                <div class="cell">序
+                <div class="cell">M_ID
                   <!---->
                   <!---->
                 </div>
               </th>
               <th class="el-table_1_column_2 is-leaf el-table__cell" colspan="1" rowspan="1">
-                <div class="cell">使用者
+                <div class="cell">M_USERNAME
                   <!---->
                   <!---->
                 </div>
               </th>
               <th class="el-table_1_column_3 is-leaf el-table__cell" colspan="1" rowspan="1">
-                <div class="cell">建立時間
+                <div class="cell">M_CREATED_AT
                   <!---->
                   <!---->
                 </div>
               </th>
               <th class="el-table_1_column_4 is-center is-leaf el-table__cell" colspan="1" rowspan="1">
-                <div class="cell">啟用
+                <div class="cell">M_ENABLE_STATE
                   <!---->
                   <!---->
                 </div>
               </th>
               <th class="el-table_1_column_5 is-center is-leaf el-table__cell" colspan="1" rowspan="1">
-                <div class="cell">鎖定
+                <div class="cell">M_LOCKED_STATE
                   <!---->
                   <!---->
                 </div>
               </th>
               <th class="el-table_1_column_6 is-center is-leaf el-table__cell" colspan="1" rowspan="1">
-                <div class="cell">操作
+                <div class="cell">M_OPERATOR
                   <!---->
                   <!---->
                 </div>
@@ -100,7 +100,7 @@ exports[`User Lists Page > 基本 1`] = `
                         <!---->
                         <transition-stub appear="true" css="true" name="el-zoom-in-center" persisted="false">
                           <span class="el-tag el-tag--success el-tag--light">
-                            <span class="el-tag__content">啟用</span>
+                            <span class="el-tag__content">M_ENABLED</span>
                             <!--v-if-->
                           </span>
                         </transition-stub>
@@ -122,11 +122,11 @@ exports[`User Lists Page > 基本 1`] = `
                         <!---->
                         <button aria-disabled="false" class="el-button el-button--small" type="button">
                           <!--v-if-->
-                          <span class>編輯</span>
+                          <span class>ACTION.EDIT</span>
                         </button>
                         <button aria-disabled="false" class="el-button el-button--danger el-button--small" type="button">
                           <!--v-if-->
-                          <span class>刪除 </span>
+                          <span class>ACTION.DELETE</span>
                         </button>
                       </div>
                     </td>
@@ -158,14 +158,14 @@ exports[`User Lists Page > 基本 1`] = `
 <!--teleport start-->
 <transition-stub appear="false" css="true" name="dialog-fade" persisted="true">
   <div class="el-overlay" style="z-index: 2001; display: none;">
-    <div aria-describedby aria-label="編輯使用者: undefined" aria-modal="true" class="el-overlay-dialog" role="dialog"></div>
+    <div aria-describedby aria-label="M_EDITED_USER: undefined" aria-modal="true" class="el-overlay-dialog" role="dialog"></div>
   </div>
 </transition-stub>
 <!--teleport end-->
 <!--teleport start-->
 <transition-stub appear="false" css="true" name="dialog-fade" persisted="true">
   <div class="el-overlay" style="z-index: 2002; display: none;">
-    <div aria-describedby aria-label="刪除使用者: undefined" aria-modal="true" class="el-overlay-dialog" role="dialog"></div>
+    <div aria-describedby aria-label="M_DELETED_USER: undefined" aria-modal="true" class="el-overlay-dialog" role="dialog"></div>
   </div>
 </transition-stub>
 <!--teleport end-->

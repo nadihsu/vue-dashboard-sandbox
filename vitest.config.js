@@ -16,5 +16,10 @@ export default mergeConfig(
         inline: ['element-plus'],
       },
     },
+    resolve: {
+      alias: {
+        Tests: fileURLToPath(new URL('./tests', import.meta.url)),
+      },
+    },
   }),
 );
