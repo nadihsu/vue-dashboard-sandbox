@@ -6,7 +6,6 @@
     el-container
       el-header
         el-menu(
-        :default-active="activeIndex"
         class="el-menu-demo"
         mode="horizontal"
         :ellipsis="false")
@@ -24,13 +23,14 @@
         router-view.
 </template>
 
-<script>
+<script lang="ts">
+import { defineComponent } from 'vue';
 import { storeToRefs } from 'pinia';
 import { useI18n } from 'vue-i18n';
 import useLangStore from '@/store/useLangStore';
 import Sidebar from './components/Sidebar.vue';
 
-export default {
+export default defineComponent({
   components: { Sidebar },
   setup() {
     const { t } = useI18n();
@@ -40,9 +40,9 @@ export default {
     /**
      * 切換語系
      *
-     * @param {string} value 語系代碼
+     * @param value 語系代碼
      */
-    function handleLangChange(value) {
+    function handleLangChange(value: 'zh-TW' | 'en-US') {
       updateLang(value);
     }
 
@@ -52,7 +52,7 @@ export default {
       handleLangChange,
     };
   },
-};
+});
 </script>
 
 <style lang="scss">

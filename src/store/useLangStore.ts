@@ -7,7 +7,7 @@ const useLangStore = defineStore('lang', {
     lang: Cookies.get('locale') || 'zh-TW',
   }),
   actions: {
-    updateLang(lang) {
+    updateLang(lang: 'zh-TW'|'en-US') {
       if (lang) {
         Cookies.set('locale', lang);
         i18n.locale.value = lang;

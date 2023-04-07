@@ -48,12 +48,16 @@ destroy-on-close)
 
 </template>
 
-<script>
-import { ref, getCurrentInstance } from 'vue';
+<script lang="ts">
+import { ref, getCurrentInstance, defineComponent, ComponentInternalInstance } from 'vue';
 import EditUserModal from './EditUserModal.vue';
 import DeleteUserModal from './DeleteUserModal.vue';
 
-export default {
+type UserType = {
+  [key: string]: any
+}
+
+export default defineComponent({
   components: { EditUserModal, DeleteUserModal },
   props: {
     data: {
@@ -70,18 +74,18 @@ export default {
     },
   },
   setup() {
-    const { proxy } = getCurrentInstance();
+    const { proxy } = getCurrentInstance() as ComponentInternalInstance;
     const showEditModal = ref(false);
     const showDeleteModal = ref(false);
-    const user = ref({});
+    const user:UserType = ref({});
 
-    /**
+    /**s
      * 日期格式化
      *
      * @param {{ created_at: string }} row 使用者建立日期
      */
-    function formatterDate(row) {
-      return proxy.$day(row.created_at).format('YYYY-MM-DD');
+    function formatterDate(row:{ created_at: string }) {
+      return (proxy as any)?.$day(row.created_at).format('YYYY-MM-DD');
     }
 
     /**
@@ -97,7 +101,7 @@ export default {
      *
      * @param {object} userData
      */
-    function openEditUserDialog(userData) {
+    function openEditUserDialog(userData:UserType) {
       showEditModal.value = true;
       user.value = userData;
     }
@@ -107,7 +111,7 @@ export default {
      *
      * @param {object} userData
      */
-    function openDeleteUserDialog(userData) {
+    function openDeleteUserDialog(userData:UserType) {
       showDeleteModal.value = true;
       user.value = userData;
     }
@@ -122,5 +126,5 @@ export default {
       openDeleteUserDialog,
     };
   },
-};
+}) ;
 </script>

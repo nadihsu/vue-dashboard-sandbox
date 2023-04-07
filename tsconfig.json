@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "ESNext", // TypeScript 將編譯成 ESNext 語法的 JavaScript 檔案
+    "module": "ESNext", // TypeScript 將編譯成 ESNext 模組格式的 JavaScript 檔案
+    "moduleResolution": "node", // module 採用 Node 解析
+    "resolveJsonModule": true, // TypeScript 將 JSON 檔案作為模塊導入 (ES2015 and above)
+    "allowSyntheticDefaultImports": true, // 支持當 export 無 default 時，仍可作為預設導出
+    "skipLibCheck": true, // TypeScript 會跳過對 node_modules 的型別檢查
+    "strict": true, // 啟用嚴格模式
+    "sourceMap": true, // 產生對應的 .map 檔案，方便於開發中除錯
+    "isolatedModules": true,  // TypeScript 會將每個 TypeScript 檔案當做獨立的模塊進行編譯 (Not suggestion in Production)
+    "baseUrl": "./", // 指定目錄的基礎路徑
+    "types": [ // 指定引入的型別檔案
+      "vite/client"
+    ],
+    "paths": { // 指定 Module 的路徑 Mapping
+      "@/*": ["src/*"],
+      "Tests/*": ["tests/*"]
+    }
+  },
+  "include": ["**/*.d.ts", "src/**/*.ts", "src/**/*.vue"],
+  "exclude": ["node_modules", "public"],
+  "references": [
+    {
+      "path": "tsconfig.node.json"
+    }
+  ],
+  "vueCompilerOptions": {
+    "plugins": [
+      "@volar/vue-language-plugin-pug"
+    ]
+  }
+}

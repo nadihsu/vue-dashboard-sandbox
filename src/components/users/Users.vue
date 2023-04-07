@@ -25,14 +25,14 @@ el-dialog(v-model="showCreateModal", :title="$t('M_CREATED_USER')", width="25%")
     :get-users="getUsers")
 </template>
 
-<script>
-import { ref, onMounted } from 'vue';
+<script lang="ts">
+import { ref, onMounted, defineComponent } from 'vue';
 import { request } from '@/utils';
 import UserList from './UserList.vue';
 import EditUserModal from './EditUserModal.vue';
 import SearchUser from './SearchUser.vue';
 
-export default {
+export default defineComponent({
   components: {
     UserList,
     EditUserModal,
@@ -50,9 +50,12 @@ export default {
 
     /**
      * 處理查詢條件
+     *
+     * @param dataData 查詢條件
+     * @returns 過濾後查詢條件
      */
-    function handleSubmitQuery(dataData) {
-      const result = {};
+    function handleSubmitQuery(dataData:object) {
+      const result:{ [key: string]: number | string } = {};
 
       Object.entries(dataData)
         .filter(([, val]) => val !== -1) // 選項不限
@@ -67,7 +70,10 @@ export default {
     /**
      * 取得使用者
      *
-     * @param {object} param0
+     * @param param params
+     * @param param.isSearching 是否檢索
+     * @param param.newPagination 新頁碼
+     * @param param.searchData 查詢條件
      */
     async function getUsers({
       isSearching = false,
@@ -93,9 +99,9 @@ export default {
     /**
      * 新增使用者
      *
-     * @param {object} userData 新增的資料
+     * @param userData 新增的資料
      */
-    async function createUser(userData) {
+    async function createUser(userData:object) {
       const out = await request('POST', '/user', userData);
 
       if (out?.result === 'ok') {
@@ -106,10 +112,10 @@ export default {
     /**
      * 編輯使用者
      *
-     * @param {string} userId 使用者代號
-     * @param {object} userData 變更使用者資料
+     * @param userId 使用者代號
+     * @param userData 變更使用者資料
      */
-    async function editUser(userId, userData) {
+    async function editUser(userId:string, userData:object) {
       const out = await request('PUT', `/user/${userId}`, userData);
 
       if (out?.result === 'ok') {
@@ -120,9 +126,9 @@ export default {
     /**
      * 刪除使用者
      *
-     * @param {string} userId 使用者代號
+     * @param userId 使用者代號
      */
-    async function deleteUser(userId) {
+    async function deleteUser(userId:string) {
       const out = await request('DELETE', `/user/${userId}`);
 
       if (out?.result === 'ok') {
@@ -133,9 +139,9 @@ export default {
     /**
      * 切換頁碼
      *
-     * @param {number} pageNo
+     * @param pageNo 頁碼數
      */
-    function handlePagedChange(pageNo) {
+    function handlePagedChange(pageNo:number) {
       const newPagination = {
         ...pagination.value,
         first_result: pagination.value.max_results * (pageNo - 1),
@@ -147,8 +153,10 @@ export default {
 
     /**
      * 切換頁碼總數
+     *
+     * @param val 每頁頁碼總數
      */
-    function handleSizeChange(val) {
+    function handleSizeChange(val:number) {
       const newPagination = {
         ...pagination.value,
         max_results: val,
@@ -183,7 +191,7 @@ export default {
       onClose,
     };
   },
-};
+});
 </script>
 
 <style scoped>
