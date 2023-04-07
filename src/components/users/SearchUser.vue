@@ -38,73 +38,93 @@
         {{ $t('ACTION.CLEAR') }}
 </template>
 
-<script>
-import { ref, getCurrentInstance, computed } from 'vue';
+<script lang="ts">
+import {
+  ref,
+  getCurrentInstance,
+  computed,
+  defineComponent,
+  ComponentInternalInstance,
+  ComputedRef,
+} from 'vue';
+
+interface Options {
+  label: string;
+  value: number;
+}
+
+interface AppProxy {
+  $t: (key: string) => string;
+}
+
+type Payload = {
+  [key: string]: any;
+  start_created_at?: string | null;
+  end_created_at?: string | null;
+}
 
 const initData = {
   username: '',
   enable: -1,
   locked: -1,
-  created_at: [],
+  created_at: '',
 };
 
-export default {
+export default defineComponent({
   props: {
     getUsers: {
       type: Function,
-      default: () => {},
+      default: () => Promise,
     },
   },
   setup(props) {
-    const { proxy } = getCurrentInstance();
+    const { proxy } = getCurrentInstance() as ComponentInternalInstance;
     const data = ref({ ...initData });
 
-    const enableOptions = computed({
-      get: () => ([
-        {
-          label: proxy.$t('M_WITHOUT_LIMIT'),
-          value: -1,
-        },
-        {
-          label: proxy.$t('M_ENABLED'),
-          value: 1,
-        },
-        {
-          label: proxy.$t('M_DISABLED'),
-          value: 0,
-        },
-      ]),
-    });
+    const enableOptions = computed(() => ([
+      {
+        label: (proxy as AppProxy)?.$t('M_WITHOUT_LIMIT') || '',
+        value: -1,
+      },
+      {
+        label: (proxy as AppProxy)?.$t('M_ENABLED') || '',
+        value: 1,
+      },
+      {
+        label: (proxy as AppProxy)?.$t('M_DISABLED') || '',
+        value: 0,
+      },
+    ])) as ComputedRef<Options[]>
 
-    const lockedOptions = computed({
-      get: () => ([
-        {
-          label: proxy.$t('M_WITHOUT_LIMIT'),
-          value: -1,
-        },
-        {
-          label: proxy.$t('M_LOCKED'),
-          value: 1,
-        },
-        {
-          label: proxy.$t('M_UNLOCKED'),
-          value: 0,
-        },
-      ]),
-    });
+    const lockedOptions = computed(() => ([
+      {
+        label: proxy?.$t('M_WITHOUT_LIMIT'),
+        value: -1,
+      },
+      {
+        label: proxy?.$t('M_LOCKED'),
+        value: 1,
+      },
+      {
+        label: proxy?.$t('M_UNLOCKED'),
+        value: 0,
+      },
+    ])) as ComputedRef<Options[]>;
 
     /**
      * 查詢使用者
      */
     async function searchUsers() {
       const [startCreatedAt, endCreatedAt] = data.value.created_at;
-      const payload = {
+
+      const payload: Payload = {
         ...data.value,
-        ...((startCreatedAt && endCreatedAt) && {
-          start_created_at: startCreatedAt,
-          end_created_at: endCreatedAt,
-        }),
       };
+
+      if (startCreatedAt && endCreatedAt) {
+        payload.start_created_at = startCreatedAt;
+        payload.end_created_at = endCreatedAt;
+      }
 
       delete payload.created_at;
 
@@ -126,7 +146,7 @@ export default {
       resetSearch,
     };
   },
-};
+});
 </script>
 
 <style lang="scss" scope>

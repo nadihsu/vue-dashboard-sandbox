@@ -24,10 +24,16 @@ el-form(:model="form", label-width="80")
       {{ user.id ? $t('ACTION.EDIT') : $t('ACTION_CREATED') }}
 </template>
 
-<script>
-import { reactive, ref } from 'vue';
+<script lang="ts">
+import { reactive, ref, defineComponent } from 'vue';
 
-export default {
+interface Form {
+  username: string;
+  enable: boolean;
+  locked: boolean;
+}
+
+export default defineComponent({
   props: {
     showModal: Boolean,
     user: {
@@ -38,15 +44,15 @@ export default {
     },
     closeModal: {
       type: Function,
-      default: () => {},
+      default: () => ({}),
     },
     createUser: {
       type: Function,
-      default: () => {},
+      default: () => Promise,
     },
     editUser: {
       type: Function,
-      default: () => {},
+      default: () => Promise,
     },
   },
   setup(props) {
@@ -60,7 +66,7 @@ export default {
      * 清空表單
      */
     function clearUser() {
-      form.value = {};
+      form.value = {} as Form;
     }
 
     /**
@@ -104,5 +110,5 @@ export default {
       submitUser,
     };
   },
-};
+});
 </script>

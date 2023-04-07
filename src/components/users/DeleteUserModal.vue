@@ -2,12 +2,12 @@
 span.
   {{ $t('M_CONFIRM_DELETE') }}
 span.dialog-footer
-  el-button(@click="closeModal") {{ $t('ACTION.CANCEL') }}
+  el-button(@click="cancelModal") {{ $t('ACTION.CANCEL') }}
   el-button(type="primary", @click="submitUser").
     {{ $t('ACTION.DELETE') }}
 </template>
 
-<script setup>
+<script setup lang="ts">
 const props = defineProps({
   active: Boolean,
   user: {
@@ -18,13 +18,20 @@ const props = defineProps({
   },
   closeModal: {
     type: Function,
-    default: () => {},
+    default: () => ({}),
   },
   deleteUser: {
     type: Function,
-    default: () => {},
+    default: () => Promise,
   },
 });
+
+/**
+ * 關閉彈窗
+ */
+function cancelModal() {
+  props.closeModal();
+}
 
 /**
  * 刪除使用者

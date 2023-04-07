@@ -1,6 +1,6 @@
 const BASE_URL = 'http://localhost:9988/api';
 
-const request = async (method, endpoint, ...args) => {
+const request = async (method: string, endpoint: string, ...args: (object | undefined)[]) => {
   let body = null;
   let params = null;
 
@@ -18,7 +18,7 @@ const request = async (method, endpoint, ...args) => {
   const url = new URL(urlWithEndpoint);
 
   if (params) {
-    url.search = new URLSearchParams(params).toString();
+    url.search = new URLSearchParams(params as Record<string, string>).toString();
   }
 
   try {

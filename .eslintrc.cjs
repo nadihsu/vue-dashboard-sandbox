@@ -4,11 +4,12 @@ require('@rushstack/eslint-patch/modern-module-resolution');
 module.exports = {
   root: true,
   extends: [
+    'plugin:jsdoc/recommended-typescript',
     'plugin:vitest-globals/recommended',
     'plugin:vue/vue3-recommended',
     'plugin:vue-pug/vue3-recommended',
     'eslint:recommended',
-    'airbnb-base',
+    '@vue/eslint-config-typescript/recommended',
   ],
   env: {
     browser: true,
@@ -44,7 +45,7 @@ module.exports = {
           ['@', './src'],
           ['Tests', './tests'],
         ],
-        extensions: ['.js', '.vue'],
+        extensions: ['.js', '.ts', '.vue'],
       },
     },
   },

@@ -13,7 +13,7 @@ const app = createApp(App);
 app.config.globalProperties.$day = dayjs;
 
 Object.keys(ElementPlusIconsVue).forEach((key) => {
-  app.component(key, ElementPlusIconsVue[key]);
+  app.component(key, ElementPlusIconsVue[key as keyof typeof ElementPlusIconsVue][key]);
 });
 
 app
