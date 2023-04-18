@@ -25,7 +25,9 @@ const router = createRouter({
 });
 
 router.beforeEach((to) => {
-  document.title = to.meta?.title ?? 'Dashboard';
+  if (typeof (to.meta?.title) === 'string') {
+    document.title = to.meta?.title ?? 'Dashboard';
+  }
 });
 
 export default router;
