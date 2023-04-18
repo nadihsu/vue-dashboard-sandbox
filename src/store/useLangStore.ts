@@ -8,17 +8,11 @@ const useLangStore = defineStore('lang', {
   }),
   actions: {
     updateLang(lang: 'zh-TW'|'en-US') {
-      if (lang) {
-        Cookies.set('locale', lang);
-        i18n.locale.value = lang;
-        this.lang = lang;
-      }
+      const newLang = lang || 'zh-TW';
 
-      if (!lang) {
-        Cookies.set('locale', 'zh-TW');
-        i18n.locale.value = 'zh-TW';
-        this.lang = 'zh-TW';
-      }
+      Cookies.set('locale', newLang);
+      i18n.locale.value = newLang;
+      this.lang = newLang;
     },
   },
 });

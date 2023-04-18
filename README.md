@@ -1,35 +1,22 @@
-# vue3-sandbox
+# Vue3 Dashboard Demo
 
-This template should help get you started developing with Vue 3 in Vite.
+tag: `vite`, `vitest`, `vue3`, `pinia`, `typescript`, `eslint`, `pug`, `sass`, `element-plus`
 
-## Recommended IDE Setup
+說明：利用 Vue.js / TypeScript 實作後台會員 CRUD 功能。
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+其中 vue eco-system 中嘗試
+- i18n 完成多語系
+- router 完成路由分配
+- pinia 嘗試全局 state manager
 
-## Customize configuration
+另外，初探 vitest 方式實踐介面的 unit test，做好 eslint 與  tsconfig 的寫作 lint 等。
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
+## Run API Server
+```shell
+cd api
+node index.js
 ```
-
-### Compile and Hot-Reload for Development
-
-```sh
+## Run Client Server
+```shell
 npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
 ```
